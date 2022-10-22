@@ -1,67 +1,71 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow strict-local
- */
+import React from "react";
+import Provider from './app/context/Provider';
 
- import React from 'react';
- import {
-   SafeAreaView,
-   ScrollView,
-   StatusBar,
-   StyleSheet,
-   Text,
-   useColorScheme,
-   View,
- } from 'react-native';
- 
- import {
-   Colors,
-   DebugInstructions,
-   Header,
-   LearnMoreLinks,
-   ReloadInstructions,
- } from 'react-native/Libraries/NewAppScreen';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-// incluir provider no APP
- import Provider from './app/context/Provider';
-// import { Provider } from 'react-redux';
-// import { createStore } from 'redux';
+import Home from './app/pages/home/home';
+import ConectaServidor from "./app/pages/conectarRede";
+import Menu from "./app/pages/Menu";
 
-// let store = createStore()
- 
-import Login from './app/pages/login';
-import ConectModal from './app/components/conectarRede';
- 
- function App(){
-   return (
+const stack = createNativeStackNavigator();
+
+export default function App() {
+  return(
     <Provider>
-      <SafeAreaView >
-        <Login/>
-      </SafeAreaView>
+      <NavigationContainer>
+        <stack.Navigator>
+          <stack.Screen 
+          name="HOME" 
+          component={Home}
+          options={{
+            headerShown: false
+          }}
+          />
+          <stack.Screen 
+          name="CONECTSERVIDOR" 
+          component={ConectaServidor}
+          options={{
+            headerShown: false
+          }}
+          />
+          <stack.Screen 
+          name="MENU" 
+          component={Menu}
+          options={{
+            headerShown: false
+          }}
+          />
+          <stack.Screen 
+          name="INVENTARIO" 
+          component={Menu}
+          options={{
+            headerShown: false
+          }}
+          />
+          <stack.Screen 
+          name="IMPETIQUETA" 
+          component={Menu}
+          options={{
+            headerShown: false
+          }}
+          />
+          <stack.Screen 
+          name="CONSULTAPRECO" 
+          component={Menu}
+          options={{
+            headerShown: false
+          }}
+          />
+          <stack.Screen 
+          name="COTACAO" 
+          component={Menu}
+          options={{
+            headerShown: false
+          }}
+          />
+        </stack.Navigator>
+      </NavigationContainer>
     </Provider>
-   );
- };
- 
- const styles = StyleSheet.create({
-   sectionContainer: {
-     marginTop: 32,
-     paddingHorizontal: 24,
-   },
-   sectionTitle: {
-     fontSize: 24,
-     fontWeight: '600',
-   },
-   sectionDescription: {
-     marginTop: 8,
-     fontSize: 18,
-     fontWeight: '400',
-   },
-   highlight: {
-     fontWeight: '700',
-   },
- });
- 
- export default App;
+  )
+}

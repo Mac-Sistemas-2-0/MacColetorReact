@@ -14,19 +14,17 @@ import {
 } from 'react-native';
 import AppContext from '../context/AppContext';
 import BtnFechaApp from '../components/btnFechaApp';
-import ConectModal from "../components/conectarRede";
+import {useNavigation} from '@react-navigation/native';
 
 function Login() {
+  const navigate = useNavigation()
   const {
     CODIGO_VENDEDOR, CAPTURA_CODIGO_VENDEDOR,
     SENHA_VENDEDOR, CAPTURA_SENHA_VENDEDOR,
-    modalVisible, setModalVisible,
-    modalDisplay, setModalDisplay,
-    modalDisplayView, setModalDisplayView
   } = useContext(AppContext);
   return(
     <>
-      <SafeAreaView style={[styles.tela, {display: modalDisplayView}]}>
+      <SafeAreaView style={[styles.tela]}>
         <View style={styles.header}>
           <Text style={styles.title}>
             Mac Coletor
@@ -54,7 +52,7 @@ function Login() {
             </View>
             <Pressable
               style={[styles.button]}
-              onPress={() => Alert.alert('Busca dados no banco')}
+              onPress={() => navigate.navigate('MENU')}
             >
               <Text style={styles.textStyle}>LOGIN</Text>
             </Pressable>
@@ -72,15 +70,7 @@ function Login() {
           <TouchableOpacity
           style={styles.btn_close}
           onPress={() => {
-            if (modalDisplay != "none"){
-              setModalVisible(false)
-              setModalDisplay("none")
-              setModalDisplayView("flex")
-            } else {
-              setModalVisible(true)
-              setModalDisplay("flex")
-              setModalDisplayView("none")
-            }
+            navigate.navigate('CONECTSERVIDOR')
           }
           }
           >
@@ -91,7 +81,6 @@ function Login() {
           </TouchableOpacity>
         </View>
       </SafeAreaView>
-      <ConectModal/>
     </>
   )
 };

@@ -7,22 +7,18 @@ function Provider({ children }) {
   const [stateB, setStateB] = useState('initialStateB');
   const [CODIGO_VENDEDOR, CAPTURA_CODIGO_VENDEDOR] = useState(null);
   const [SENHA_VENDEDOR, CAPTURA_SENHA_VENDEDOR] = useState(null);
-  const [modalVisible, setModalVisible] = useState(false);
-  const [modalDisplay, setModalDisplay] = useState("none");
-  const [modalDisplayView, setModalDisplayView] = useState("flex");
   const [PORTA, CAPTURA_PORTA] = useState(null);
   const [SERVIDOR, CAPTURA_SERVIDOR] = useState(null);
+  const [VENDEDOR, setVENDEDOR] = useState("Bruno")
 
   const contextValue = {
     stateA, setStateA,
     stateB, setStateB,
     CODIGO_VENDEDOR, CAPTURA_CODIGO_VENDEDOR,
     SENHA_VENDEDOR, CAPTURA_SENHA_VENDEDOR,
-    modalVisible, setModalVisible,
-    modalDisplay, setModalDisplay,
-    modalDisplayView, setModalDisplayView,
     PORTA, CAPTURA_PORTA,
-    SERVIDOR, CAPTURA_SERVIDOR
+    SERVIDOR, CAPTURA_SERVIDOR,
+    VENDEDOR, setVENDEDOR
   };
 
   return (
