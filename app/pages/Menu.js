@@ -9,7 +9,7 @@ const ConectModal = () => {
   const navigate = useNavigation()
 
   const {
-    VENDEDOR
+    VENDEDOR,
   } = useContext(AppContext);
   return (
     // container global
