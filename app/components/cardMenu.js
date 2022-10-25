@@ -43,6 +43,7 @@ const CardMenu = () => {
               <Pressable
               style={[styles.button]}
               onPress={e.nav}
+              key={e.nome}
               >
                 <Image
                 style={styles.logo}
@@ -63,6 +64,7 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     flexDirection: "row",
     justifyContent: "center",
+    width: 400
   },
   button: {
     backgroundColor: "#FFF",

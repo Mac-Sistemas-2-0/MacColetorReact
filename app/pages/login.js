@@ -22,6 +22,34 @@ function Login() {
     CODIGO_VENDEDOR, CAPTURA_CODIGO_VENDEDOR,
     SENHA_VENDEDOR, CAPTURA_SENHA_VENDEDOR,
   } = useContext(AppContext);
+
+  const dataLogin = [
+    {"nome": "Bruno", "senha": "123"},
+    {"nome": "Alessandro", "senha": "123"}
+  ]
+
+  // function validaLogin() {
+  //   for(let i = 0; i < dataLogin.length; i = i + 1) {
+  //     if( dataLogin[i].nome.toUpperCase() === CODIGO_VENDEDOR.toUpperCase()) {
+  //       Alert.alert( i + ' - ' + dataLogin[i].nome.toUpperCase() + '-' + CODIGO_VENDEDOR.toUpperCase())
+  //     } else {
+  //       Alert.alert(i + ' - ' + dataLogin[i].nome.toUpperCase() + ' - ' + dataLogin.length + " - Nome Nao confere: " + CODIGO_VENDEDOR)
+  //     }
+  //   }
+  // }
+
+  function validaLogin() {
+    for(let i in dataLogin) {
+      let user = dataLogin[i]
+      if(user.nome.toUpperCase() === CODIGO_VENDEDOR.toUpperCase() && user.senha === SENHA_VENDEDOR){
+        return navigate.navigate('MENU')
+      }
+    }
+    return Alert.alert("login invalido")
+  }
+
+
+
   return(
     <>
       <SafeAreaView style={[styles.tela]}>
@@ -52,7 +80,7 @@ function Login() {
             </View>
             <Pressable
               style={[styles.button]}
-              onPress={() => navigate.navigate('MENU')}
+              onPress={() => validaLogin()}
             >
               <Text style={styles.textStyle}>LOGIN</Text>
             </Pressable>

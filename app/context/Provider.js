@@ -1,5 +1,6 @@
 // ./src/context/Provider.js
 import React, { useState } from 'react';
+import { Alert } from 'react-native';
 import AppContext from './AppContext';
 
 function Provider({ children }) {
