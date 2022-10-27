@@ -28,16 +28,6 @@ function Login() {
     {"nome": "Alessandro", "senha": "123"}
   ]
 
-  // function validaLogin() {
-  //   for(let i = 0; i < dataLogin.length; i = i + 1) {
-  //     if( dataLogin[i].nome.toUpperCase() === CODIGO_VENDEDOR.toUpperCase()) {
-  //       Alert.alert( i + ' - ' + dataLogin[i].nome.toUpperCase() + '-' + CODIGO_VENDEDOR.toUpperCase())
-  //     } else {
-  //       Alert.alert(i + ' - ' + dataLogin[i].nome.toUpperCase() + ' - ' + dataLogin.length + " - Nome Nao confere: " + CODIGO_VENDEDOR)
-  //     }
-  //   }
-  // }
-
   function validaLogin() {
     for(let i in dataLogin) {
       let user = dataLogin[i]
