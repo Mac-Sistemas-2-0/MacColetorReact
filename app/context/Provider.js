@@ -6,10 +6,10 @@ import AppContext from './AppContext';
 function Provider({ children }) {
   const [stateA, setStateA] = useState('initialStateA');
   const [stateB, setStateB] = useState('initialStateB');
-  const [CODIGO_VENDEDOR, CAPTURA_CODIGO_VENDEDOR] = useState(null);
-  const [SENHA_VENDEDOR, CAPTURA_SENHA_VENDEDOR] = useState(null);
-  const [PORTA, CAPTURA_PORTA] = useState(null);
-  const [SERVIDOR, CAPTURA_SERVIDOR] = useState(null);
+  const [CODIGO_VENDEDOR, CAPTURA_CODIGO_VENDEDOR] = useState('');
+  const [SENHA_VENDEDOR, CAPTURA_SENHA_VENDEDOR] = useState(0);
+  const [PORTA, CAPTURA_PORTA] = useState(0);
+  const [SERVIDOR, CAPTURA_SERVIDOR] = useState('');
   const [VENDEDOR, setVENDEDOR] = useState("Bruno")
 
   const contextValue = {

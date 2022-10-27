@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import {
   View,
   Text,
@@ -49,6 +49,9 @@ function Login() {
   }
 
 
+  useEffect(() => {
+    navigate.navigate('HOME')
+  });
 
   return(
     <>

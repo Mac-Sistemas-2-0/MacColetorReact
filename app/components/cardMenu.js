@@ -7,6 +7,7 @@ import {useNavigation} from '@react-navigation/native';
 
 const CardMenu = () => {
   const navigate = useNavigation()
+
   const menu = [
     {
       nome: "Inventário",

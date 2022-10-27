@@ -7,8 +7,11 @@ import {
   StyleSheet,
   Alert
 } from 'react-native';
+import {useNavigation} from '@react-navigation/native';
 
 function btnFechaApp() {
+  const navigate = useNavigation()
+
   return (
     <TouchableOpacity
     style={styles.btn_close}
@@ -17,8 +20,13 @@ function btnFechaApp() {
         'Exit App',
         'Deseja fechar o aplicativo?',
         [
-          {text: 'No', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-          {text: 'Yes', onPress: () => BackHandler.exitApp()},
+          { text: 'No', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
+          { text: 'Yes', onPress: async () => 
+          {
+            navigate.navigate('HOME')
+            BackHandler.exitApp() 
+          }
+        },
         ],
         { cancelable: false });
         return true;

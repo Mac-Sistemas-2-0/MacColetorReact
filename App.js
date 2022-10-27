@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import Provider from './app/context/Provider';
 
 import { NavigationContainer } from '@react-navigation/native';
@@ -7,6 +7,11 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Home from './app/pages/home/home';
 import ConectaServidor from "./app/pages/conectarRede";
 import Menu from "./app/pages/Menu";
+import Inventario from "./app/pages/Inventario";
+import ImpEtiqueta from "./app/pages/ImpEtiqueta";
+import ConsultaPreco from "./app/pages/ConsultaPreco";
+import Cotacao from "./app/pages/Cotacao";
+
 
 const stack = createNativeStackNavigator();
 
@@ -14,7 +19,9 @@ export default function App() {
   return(
     <Provider>
       <NavigationContainer>
-        <stack.Navigator>
+        <stack.Navigator
+        initialRouteName="HOME"
+        >
           <stack.Screen 
           name="HOME" 
           component={Home}
@@ -38,28 +45,28 @@ export default function App() {
           />
           <stack.Screen 
           name="INVENTARIO" 
-          component={Menu}
+          component={Inventario}
           options={{
             headerShown: false
           }}
           />
           <stack.Screen 
           name="IMPETIQUETA" 
-          component={Menu}
+          component={ImpEtiqueta}
           options={{
             headerShown: false
           }}
           />
           <stack.Screen 
           name="CONSULTAPRECO" 
-          component={Menu}
+          component={ConsultaPreco}
           options={{
             headerShown: false
           }}
           />
           <stack.Screen 
           name="COTACAO" 
-          component={Menu}
+          component={Cotacao}
           options={{
             headerShown: false
           }}
