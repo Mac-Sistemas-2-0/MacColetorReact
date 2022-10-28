@@ -1,14 +1,59 @@
 import React, { useContext } from "react";
-import { StyleSheet, Text, Pressable, View } from "react-native";
 import AppContext from '../context/AppContext';
+import { StyleSheet,
+  Text, 
+  Pressable, 
+  View,
+  TextInput,
+  Alert,
+  Image
+} from "react-native";
 import {useNavigation} from '@react-navigation/native';
+import CardComp from "../components/codComp";
 
 const Inventario = () => {
   const navigate = useNavigation()
   const {
-    PORTA, CAPTURA_PORTA,
-    SERVIDOR, CAPTURA_SERVIDOR
+    DESCRICAO_INVENTARIO, setDESCRICAO_INVENTARIO,
+    LOCALIZACAO_INVENTARIO, setLOCALIZACAO_INVENTARIO,
+    STATUS_INVENTARIO, setSTATUS_INVENTARIO,
+    TIPO_INVENTARIO, setTIPO_INVENTARIO,
+    UNIDADE_INVENTARIO, setUNIDADE_INVENTARIO,
+    ESTADO_ATUAL_INVENTARIO, setSTADO_ATUAL_INVENTARIO,
+    ESTADO_APURADO_INVENTARIO, setESTADO_APURADO_INVENTARIO
   } = useContext(AppContext);
+
+  const dataInput = [
+    {
+      nome: "Descrição: ",
+      function: setDESCRICAO_INVENTARIO
+    },
+    {
+      nome: "Localização: ",
+      function: setLOCALIZACAO_INVENTARIO
+    },
+    {
+      nome: "Status: ",
+      function: setSTATUS_INVENTARIO
+    },
+    {
+      nome: "Tipo: ",
+      function: setTIPO_INVENTARIO
+    },
+    {
+      nome: "Unidade: ",
+      function: setUNIDADE_INVENTARIO
+    },
+    {
+      nome: "Est. Atual: ",
+      function: setSTADO_ATUAL_INVENTARIO
+    },
+    {
+      nome: "Est. Apurado: ",
+      function: setESTADO_APURADO_INVENTARIO
+    }
+  ];
+
   return (
     // container global
     <View style={styles.tela} >
@@ -20,6 +65,21 @@ const Inventario = () => {
       </View>
       {/* Corpo da aplicacao */}
       <View style={styles.centeredView}>
+        <CardComp/>
+        { dataInput.map((e) => {
+            return(
+              <View style={ styles.inputContainer} key={e.nome}>
+                <Text style={styles.titleInput}>{e.nome}</Text>
+                <TextInput
+                  style={styles.input}
+                  onChangeText={e.function}
+                  placeholderTextColor ="#FFFFFF"
+                  keyboardType="text"
+                />
+              </View>
+            )
+          })
+        }
       </View>
       {/* Rodape */}
       <View style={styles.footerLogin}>
@@ -36,8 +96,15 @@ const Inventario = () => {
 
 const styles = StyleSheet.create({
   centeredView: {
-    justifyContent: "center",
-    alignItems: "center",
+    width: "95%",
+    backgroundColor: "#FFF",
+    borderRadius: 10,
+    flexWrap: "nowrap",
+  },
+  logoFooterBTN: {
+    width: 30,
+    marginLeft: 5,
+    height: 30
   },
   tela: {
     justifyContent: "space-between",
@@ -56,6 +123,21 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "600",
     color: "#FFFFFF"
+  },
+  inputContainer: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-between",
+    alignItems: "center",
+    borderBottomWidth: 1,
+    padding: 5,
+    borderBottomColor: "#02225B"
+  },
+  titleInput: {
+    fontSize: 20,
+    fontWeight: "600",
+    position: "relative",
+    color: "#0E4BB3"
   },
   button: {
     borderRadius: 2,
@@ -76,12 +158,13 @@ const styles = StyleSheet.create({
     textAlign: "center"
   },
   input: {
-    height: 40,
-    width: 300,
+    height: 30,
+    width: "55%",
     borderWidth: 2,
     borderRadius: 5,
-    marginBottom: 10,
+    marginBottom: 5,
     marginTop: 10,
+    marginLeft: 5,
     padding: 10,
     color: "#FFFFFF",
     fontSize: 15,
