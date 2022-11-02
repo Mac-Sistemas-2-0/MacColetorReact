@@ -27,7 +27,7 @@ const CardMenu = () => {
     {
       nome: "Cotação",
       icon: require('../assets/images/iconGrafico.png'),
-      nav: () => navigate.navigate('COTACAO')
+      nav: () => navigate.navigate('SOLICITARCOTACAO')
     }
   ]
   const {

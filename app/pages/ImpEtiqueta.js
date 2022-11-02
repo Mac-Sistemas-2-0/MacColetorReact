@@ -1,14 +1,31 @@
 import React, { useContext } from "react";
-import { StyleSheet, Text, Pressable, View } from "react-native";
+import { StyleSheet,
+  Text, 
+  Pressable, 
+  View,
+  TextInput,
+  Alert,
+  Image
+} from "react-native";
 import AppContext from '../context/AppContext';
 import {useNavigation} from '@react-navigation/native';
+
+import CardComp from "../components/codComp";
 
 const ImpEtiqueta = () => {
   const navigate = useNavigation()
   const {
-    PORTA, CAPTURA_PORTA,
-    SERVIDOR, CAPTURA_SERVIDOR
+    COPIAS_CONSULTA_PRECO, set_COPIAS_CONSULTA_PRECO
   } = useContext(AppContext);
+
+  const dataInput = [
+    {
+      nome: "Qtde. Cópias: ",
+      function: () => set_COPIAS_CONSULTA_PRECO
+    },
+  ];
+
+
   return (
     // container global
     <View style={styles.tela} >
@@ -20,6 +37,21 @@ const ImpEtiqueta = () => {
       </View>
       {/* Corpo da aplicacao */}
       <View style={styles.centeredView}>
+        <CardComp/>
+        { dataInput.map((e) => {
+            return(
+              <View style={ styles.inputContainer} key={e.nome}>
+                <Text style={styles.titleInput}>{e.nome}</Text>
+                <TextInput
+                  style={styles.input}
+                  onChangeText={e.function}
+                  placeholderTextColor ="#FFFFFF"
+                  keyboardType="text"
+                />
+              </View>
+            )
+          })
+        }
       </View>
       {/* Rodape */}
       <View style={styles.footerLogin}>
@@ -36,8 +68,15 @@ const ImpEtiqueta = () => {
 
 const styles = StyleSheet.create({
   centeredView: {
-    justifyContent: "center",
-    alignItems: "center",
+    width: "95%",
+    height: "85%",
+    borderRadius: 10,
+    flexWrap: "nowrap",
+  },
+  logoFooterBTN: {
+    width: 30,
+    marginLeft: 5,
+    height: 30
   },
   tela: {
     justifyContent: "space-between",
@@ -55,7 +94,23 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     fontWeight: "600",
-    color: "#FFFFFF"
+    color: "#FFF"
+  },
+  inputContainer: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-between",
+    alignItems: "center",
+    borderBottomWidth: 1,
+    padding: 5,
+    marginTop: 3,
+    borderBottomColor: "#02225B"
+  },
+  titleInput: {
+    fontSize: 20,
+    fontWeight: "600",
+    position: "relative",
+    color: "#FFF"
   },
   button: {
     borderRadius: 2,
@@ -76,16 +131,15 @@ const styles = StyleSheet.create({
     textAlign: "center"
   },
   input: {
-    height: 40,
-    width: 300,
-    borderWidth: 2,
+    height: 35,
+    width: "55%",
+    borderWidth: 1,
     borderRadius: 5,
-    marginBottom: 10,
-    marginTop: 10,
-    padding: 10,
-    color: "#FFFFFF",
-    fontSize: 15,
-    backgroundColor: "#577BFF",
+    padding: 5,
+    marginLeft: 5,
+    color: "#000",
+    fontSize: 20,
+    backgroundColor: "#FFF",
   },
   footerLogin: {
     flexDirection: "row",

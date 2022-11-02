@@ -10,7 +10,7 @@ import Menu from "./app/pages/Menu";
 import Inventario from "./app/pages/Inventario";
 import ImpEtiqueta from "./app/pages/ImpEtiqueta";
 import ConsultaPreco from "./app/pages/ConsultaPreco";
-import Cotacao from "./app/pages/Cotacao";
+import SolicitarCotacao from "./app/pages/SolicitarCotacao";
 
 
 const stack = createNativeStackNavigator();
@@ -65,8 +65,8 @@ export default function App() {
           }}
           />
           <stack.Screen 
-          name="COTACAO" 
-          component={Cotacao}
+          name="SOLICITARCOTACAO" 
+          component={SolicitarCotacao}
           options={{
             headerShown: false
           }}
