@@ -22,7 +22,7 @@ function cardComp() {
     <Text style={styles.titleInput}>COD:</Text>
     <TextInput
       style={styles.input}
-      onChangeText={setCOD_INVENTARIO}
+      onChangeText={() => setCOD_INVENTARIO}
       placeholderTextColor ="#FFFFFF"
       keyboardType="text"
     />
@@ -77,20 +77,18 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "600",
     position: "relative",
-    color: "#0E4BB3"
+    color: "#FFF"
   },
   input: {
-    height: 30,
+    height: 35,
     width: "55%",
-    borderWidth: 2,
+    borderWidth: 1,
     borderRadius: 5,
-    marginBottom: 5,
-    marginTop: 10,
+    padding: 5,
     marginLeft: 5,
-    padding: 10,
-    color: "#FFFFFF",
-    fontSize: 15,
-    backgroundColor: "#577BFF",
+    color: "#000",
+    fontSize: 20,
+    backgroundColor: "#FFF",
   },
 });
 

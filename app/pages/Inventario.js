@@ -26,31 +26,31 @@ const Inventario = () => {
   const dataInput = [
     {
       nome: "Descrição: ",
-      function: setDESCRICAO_INVENTARIO
+      function: () => setDESCRICAO_INVENTARIO
     },
     {
       nome: "Localização: ",
-      function: setLOCALIZACAO_INVENTARIO
+      function: () => setLOCALIZACAO_INVENTARIO
     },
     {
       nome: "Status: ",
-      function: setSTATUS_INVENTARIO
+      function: () => setSTATUS_INVENTARIO
     },
     {
       nome: "Tipo: ",
-      function: setTIPO_INVENTARIO
+      function: () => setTIPO_INVENTARIO
     },
     {
       nome: "Unidade: ",
-      function: setUNIDADE_INVENTARIO
+      function: () => setUNIDADE_INVENTARIO
     },
     {
       nome: "Est. Atual: ",
-      function: setSTADO_ATUAL_INVENTARIO
+      function: () => setSTADO_ATUAL_INVENTARIO
     },
     {
       nome: "Est. Apurado: ",
-      function: setESTADO_APURADO_INVENTARIO
+      function: () => setESTADO_APURADO_INVENTARIO
     }
   ];
 
@@ -97,7 +97,7 @@ const Inventario = () => {
 const styles = StyleSheet.create({
   centeredView: {
     width: "95%",
-    backgroundColor: "#FFF",
+    height: "85%",
     borderRadius: 10,
     flexWrap: "nowrap",
   },
@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     fontWeight: "600",
-    color: "#FFFFFF"
+    color: "#FFF"
   },
   inputContainer: {
     flexDirection: "row",
@@ -131,13 +131,14 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderBottomWidth: 1,
     padding: 5,
+    marginTop: 3,
     borderBottomColor: "#02225B"
   },
   titleInput: {
     fontSize: 20,
     fontWeight: "600",
     position: "relative",
-    color: "#0E4BB3"
+    color: "#FFF"
   },
   button: {
     borderRadius: 2,
@@ -158,17 +159,15 @@ const styles = StyleSheet.create({
     textAlign: "center"
   },
   input: {
-    height: 30,
+    height: 35,
     width: "55%",
-    borderWidth: 2,
+    borderWidth: 1,
     borderRadius: 5,
-    marginBottom: 5,
-    marginTop: 10,
+    padding: 5,
     marginLeft: 5,
-    padding: 10,
-    color: "#FFFFFF",
-    fontSize: 15,
-    backgroundColor: "#577BFF",
+    color: "#000",
+    fontSize: 20,
+    backgroundColor: "#FFF",
   },
   footerLogin: {
     flexDirection: "row",
