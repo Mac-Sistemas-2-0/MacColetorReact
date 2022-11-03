@@ -10,6 +10,7 @@ import { StyleSheet,
 } from "react-native";
 import {useNavigation} from '@react-navigation/native';
 import CardComp from "../components/codComp";
+import BtnSalvar from "../components/btnSalvar";
 
 const Inventario = () => {
   const navigate = useNavigation()
@@ -89,6 +90,7 @@ const Inventario = () => {
           >
             <Text style={styles.textStyle}>Voltar</Text>
       </Pressable>
+      <BtnSalvar/>
       </View>
     </View>
   );

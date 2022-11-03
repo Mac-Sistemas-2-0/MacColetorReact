@@ -10,6 +10,8 @@ import { StyleSheet,
 import AppContext from '../context/AppContext';
 import {useNavigation} from '@react-navigation/native';
 import CardComp from "../components/codComp";
+import BtnGeraCod from "../components/btnGeraCod";
+import BtnCadastrar from "../components/btnCadastrar";
 
 const Cotacao = () => {
   const navigate = useNavigation()
@@ -70,6 +72,8 @@ const Cotacao = () => {
           >
             <Text style={styles.textStyle}>Voltar</Text>
       </Pressable>
+      <BtnGeraCod/>
+      <BtnCadastrar/>
       </View>
     </View>
   );
