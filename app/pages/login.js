@@ -21,6 +21,7 @@ function Login() {
   const {
     CODIGO_VENDEDOR, CAPTURA_CODIGO_VENDEDOR,
     SENHA_VENDEDOR, CAPTURA_SENHA_VENDEDOR,
+    stateA, setStateA
   } = useContext(AppContext);
 
   const dataLogin = [
@@ -28,14 +29,43 @@ function Login() {
     {"nome": "Alessandro", "senha": "123"}
   ]
 
-  function validaLogin() {
-    for(let i in dataLogin) {
+  let result = ''
+
+  const conectApi = async () => {
+    try {
+     const response = await fetch('http://192.168.1.14:9090/coletor', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        usuario: CODIGO_VENDEDOR,
+        senha: SENHA_VENDEDOR,
+        tipo: 'login'
+      })
+    });
+    const json = await response.json();
+    result = json.retorno;
+   } catch (error) {
+    setStateA.error(error);
+   }
+  }
+
+  async function validaLogin() {
+    await conectApi();
+    await exibi();
+/*     for(let i in dataLogin) {
       let user = dataLogin[i]
       if(user.nome.toUpperCase() === CODIGO_VENDEDOR.toUpperCase() && user.senha === SENHA_VENDEDOR){
         return navigate.navigate('MENU')
       }
     }
-    return Alert.alert("login invalido")
+    return Alert.alert("login invalido") */
+  }
+
+  function exibi() {
+    Alert.alert(JSON.stringify(result))
   }
 
 

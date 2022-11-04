@@ -22,7 +22,7 @@ const ConectModal = () => {
           <View style={styles.card_acess}>
             <TextInput
               style={styles.input}
-              onChangeText={CAPTURA_SERVIDOR}
+              onChangeText={() => CAPTURA_SERVIDOR}
               value={SERVIDOR}
               placeholder="HOST"
               placeholderTextColor ="#FFFFFF"
@@ -30,7 +30,7 @@ const ConectModal = () => {
             />
             <TextInput
               style={styles.input}
-              onChangeText={CAPTURA_PORTA}
+              onChangeText={() => CAPTURA_PORTA}
               value={PORTA}
               placeholder="PORTA"
               placeholderTextColor ="#FFFFFF"

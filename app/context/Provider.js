@@ -1,10 +1,9 @@
 // ./src/context/Provider.js
 import React, { useState } from 'react';
-import { Alert } from 'react-native';
 import AppContext from './AppContext';
 
 function Provider({ children }) {
-  const [stateA, setStateA] = useState('initialStateA');
+  const [stateA, setStateA] = useState('oi');
   const [stateB, setStateB] = useState('initialStateB');
   //VARIAVEIS TELA LOGIN
   const [CODIGO_VENDEDOR, CAPTURA_CODIGO_VENDEDOR] = useState('');
@@ -32,7 +31,62 @@ function Provider({ children }) {
   // Solicitar Cotacao
   const [QUANTIDADE_SOLICITAR_COTACAO, set_QUANTIDADE_SOLICITAR_COTACAO] = useState("");
 
+//*****************************************************************************************************************************************************************************************\\
+//Requisições API
+/* const conectApi = async (CODIGO_VENDEDOR, SENHA_VENDEDOR ) => {
+  const urlAPI = `${SERVIDOR}:${PORTA}/coletor`
+  const jsonLogin = {
+    usuario: CODIGO_VENDEDOR,
+    senha: SENHA_VENDEDOR,
+    tipo: 'login'
+  };
+  try {
+    return await fetch("http://192.168.1.14:9090/coletor", {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(
+        jsonLogin
+      )
+    })
+    .then((res) => res.json())
+    .then((json) => {
+      return JSON.parse(json);
+    })
+  } catch (error) {
+    console.error(error);
+  }
+  ;
+} */
+
+const conectApi = async () => {
+  try {
+   const response = await fetch('http://192.168.1.14:9090/coletor', {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      usuario: CODIGO_VENDEDOR,
+      senha: SENHA_VENDEDOR,
+      tipo: 'login'
+    })
+  });
+   const json = await response.json();
+  setStateA(json.retorno);
+ } catch (error) {
+  setStateA.error(error);
+ }
+}
+
+
+//*****************************************************************************************************************************************************************************************\\
+
   const contextValue = {
+    conectApi,
     stateA, setStateA,
     stateB, setStateB,
     ////VARIAVEIS TELA LOGIN
