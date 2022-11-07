@@ -1,14 +1,13 @@
 import React, { useContext } from "react";
-import { Alert, Modal, StyleSheet, Text, Pressable, View, TextInput } from "react-native";
+import { StyleSheet, Text, Pressable, View, TextInput } from "react-native";
 import AppContext from '../context/AppContext';
-import BtnFechaApp from '../components/btnFechaApp';
 import {useNavigation} from '@react-navigation/native';
 
 const ConectModal = () => {
   const navigate = useNavigation()
   const {
-    PORTA, CAPTURA_PORTA,
-    SERVIDOR, CAPTURA_SERVIDOR
+    SERVIDOR, CAPTURA_SERVIDOR,
+    PORTA, CAPTURA_PORTA
   } = useContext(AppContext);
   return (
       <View style={styles.tela} >
@@ -22,7 +21,7 @@ const ConectModal = () => {
           <View style={styles.card_acess}>
             <TextInput
               style={styles.input}
-              onChangeText={() => CAPTURA_SERVIDOR}
+              onChangeText={CAPTURA_SERVIDOR}
               value={SERVIDOR}
               placeholder="HOST"
               placeholderTextColor ="#FFFFFF"
@@ -30,7 +29,7 @@ const ConectModal = () => {
             />
             <TextInput
               style={styles.input}
-              onChangeText={() => CAPTURA_PORTA}
+              onChangeText={CAPTURA_PORTA}
               value={PORTA}
               placeholder="PORTA"
               placeholderTextColor ="#FFFFFF"

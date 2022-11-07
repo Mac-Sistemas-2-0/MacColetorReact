@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   BackHandler,
   Text,
@@ -8,9 +8,14 @@ import {
   Alert
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
+import AppContext from '../context/AppContext';
 
 function btnFechaApp() {
   const navigate = useNavigation()
+  const {
+    CAPTURA_CODIGO_VENDEDOR,
+    CAPTURA_SENHA_VENDEDOR 
+  } = useContext(AppContext)
 
   return (
     <TouchableOpacity
@@ -23,6 +28,8 @@ function btnFechaApp() {
           { text: 'No', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
           { text: 'Yes', onPress: async () => 
           {
+            CAPTURA_CODIGO_VENDEDOR('')
+            CAPTURA_SENHA_VENDEDOR('')
             navigate.navigate('HOME')
             BackHandler.exitApp() 
           }

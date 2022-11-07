@@ -15,63 +15,69 @@ import {
 import AppContext from '../context/AppContext';
 import BtnFechaApp from '../components/btnFechaApp';
 import {useNavigation} from '@react-navigation/native';
+import Reload from '../components/reload'
 
 function Login() {
   const navigate = useNavigation()
   const {
     CODIGO_VENDEDOR, CAPTURA_CODIGO_VENDEDOR,
     SENHA_VENDEDOR, CAPTURA_SENHA_VENDEDOR,
-    stateA, setStateA
+    PORTA, 
+    SERVIDOR,
+    display, setDISPLAY
   } = useContext(AppContext);
 
-  const dataLogin = [
-    {"nome": "Bruno", "senha": "123"},
-    {"nome": "Alessandro", "senha": "123"}
-  ]
-
-  let result = ''
-
+  //Função para login Aplicação - Bruno Faria.
   const conectApi = async () => {
+    setDISPLAY(true);
+    const montaUrl = `http://${SERVIDOR}:${PORTA}/coletor`
     try {
-     const response = await fetch('http://192.168.1.14:9090/coletor', {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        usuario: CODIGO_VENDEDOR,
-        senha: SENHA_VENDEDOR,
-        tipo: 'login'
-      })
-    });
-    const json = await response.json();
-    result = json.retorno;
-   } catch (error) {
-    setStateA.error(error);
+      if(SERVIDOR === '' | PORTA === '') {
+        setDISPLAY(false);
+        Alert.alert('Inclua informações do Servidor!')
+      } else {
+        const response = await fetch(montaUrl, {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            usuario: CODIGO_VENDEDOR.toUpperCase(),
+            senha: SENHA_VENDEDOR,
+            tipo: 'login'
+          })
+        },
+        );
+        const json = await response.json();
+        if(JSON.stringify(json.retorno) === '"autenticado"') {
+          setDISPLAY(false);
+          navigate.navigate('MENU')
+        } else if(JSON.stringify(json.retorno)  === '"Usuário incorreto"') {
+          setDISPLAY(false);
+          Alert.alert('Usuário incorreto!')
+        } else if(JSON.stringify(json.retorno)  === '"Senha incorreta"') {
+          setDISPLAY(false);
+          Alert.alert('Senha incorreta!')
+        } else if(CODIGO_VENDEDOR === '' | SENHA_VENDEDOR === '') {
+          setDISPLAY(false);
+          Alert.alert('Preencha as informações de Login!')
+        } 
+        else if(JSON.stringify(json).includes("failed")) {
+          setDISPLAY(false);
+          Alert.alert('Conexao com HOST falhou!')
+        }
+      }
+    } catch (error) {
+      setDISPLAY(false);
+      Alert.alert('Conexao com HOST falhou!')
+    /* console.log(error); */
    }
   }
 
-  async function validaLogin() {
-    await conectApi();
-    await exibi();
-/*     for(let i in dataLogin) {
-      let user = dataLogin[i]
-      if(user.nome.toUpperCase() === CODIGO_VENDEDOR.toUpperCase() && user.senha === SENHA_VENDEDOR){
-        return navigate.navigate('MENU')
-      }
-    }
-    return Alert.alert("login invalido") */
-  }
-
-  function exibi() {
-    Alert.alert(JSON.stringify(result))
-  }
-
-
-  useEffect(() => {
+/*   useEffect(() => {
     navigate.navigate('HOME')
-  });
+  }); */
 
   return(
     <>
@@ -103,7 +109,7 @@ function Login() {
             </View>
             <Pressable
               style={[styles.button]}
-              onPress={() => validaLogin()}
+              onPress={() => conectApi()}
             >
               <Text style={styles.textStyle}>LOGIN</Text>
             </Pressable>
@@ -116,6 +122,7 @@ function Login() {
             <Text style={styles.verions}>V 1.2</Text>
           </View>
         </View>
+        {display ? <Reload/> : null}
         <View style={styles.footerLogin}>
           <BtnFechaApp/>
           <TouchableOpacity
@@ -142,6 +149,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     height: "100%",
     backgroundColor: "#0E4BB3",
+  },
+  none: {
+    display: "none"
+  },
+  flex: {
+    display: "flex"
   },
   header: {
     alignItems: "center",

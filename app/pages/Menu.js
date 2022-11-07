@@ -9,7 +9,7 @@ const ConectModal = () => {
   const navigate = useNavigation()
 
   const {
-    VENDEDOR
+    CODIGO_VENDEDOR,
   } = useContext(AppContext);
   return (
     // container global
@@ -22,7 +22,7 @@ const ConectModal = () => {
       </View>
       {/* Corpo da aplicacao */}
       <View style={styles.centeredView}>
-        <Text style={styles.titleUser}>Bem vindo {VENDEDOR}!</Text>
+        <Text style={styles.titleUser}>Bem vindo {CODIGO_VENDEDOR}!</Text>
         <View>
           <CardMenu/>
         </View>
