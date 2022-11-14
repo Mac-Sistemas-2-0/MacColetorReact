@@ -45,15 +45,10 @@ function Provider({ children }) {
   // Recarregar
   const [display, setDISPLAY] = useState(false)
 
-  const [hasPermission, setHasPermission] = useState(null);
-  const [scanned, setScanned] = useState(false);
-
 //*****************************************************************************************************************************************************************************************\\
 //*****************************************************************************************************************************************************************************************\\
 
   const contextValue = {
-    hasPermission, setHasPermission,
-    scanned, setScanned,
     stateA, setStateA,
     stateB, setStateB,
     ////VARIAVEIS TELA LOGIN

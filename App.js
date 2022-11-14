@@ -1,8 +1,8 @@
-import React, {useEffect} from "react";
+import React, {useState, useEffect} from "react";
 import Provider from './app/context/Provider';
 
 import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator, CardStyleInterpolators  } from '@react-navigation/native-stack';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import Home from './app/pages/home/home';
 import ConectaServidor from "./app/pages/conectarRede";
@@ -15,7 +15,7 @@ import SolicitarCotacao from "./app/pages/SolicitarCotacao";
 
 
 export default function App() {
-
+  
   const stack = createNativeStackNavigator();
   return(
     <Provider>
