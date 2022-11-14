@@ -17,8 +17,18 @@ function Provider({ children }) {
   const [COD_INVENTARIO, setCOD_INVENTARIO] = useState('');
   const [DESCRICAO_INVENTARIO, setDESCRICAO_INVENTARIO] = useState("");
   const [LOCALIZACAO_INVENTARIO, setLOCALIZACAO_INVENTARIO] = useState("");
-  const [STATUS_INVENTARIO, setSTATUS_INVENTARIO] = useState("");
-  const [TIPO_INVENTARIO, setTIPO_INVENTARIO] = useState("");
+  const [STATUS_INVENTARIO, setSTATUS_INVENTARIO] = useState(
+    [
+      {label: 'ATIVO', value: '1'},
+      {label: 'DESATIVAR', value: '2'}
+    ]
+  );
+  const [TIPO_INVENTARIO, setTIPO_INVENTARIO] = useState(
+    [
+      {label: 'PARCIAL', value: '1'},
+      {label: 'TOTAL', value: '2'}
+    ]
+  );
   const [UNIDADE_INVENTARIO, setUNIDADE_INVENTARIO] = useState("");
   const [ESTADO_ATUAL_INVENTARIO, setESTADO_ATUAL_INVENTARIO] = useState("");
   const [ESTADO_APURADO_INVENTARIO, setESTADO_APURADO_INVENTARIO,] = useState("");
@@ -28,17 +38,22 @@ function Provider({ children }) {
   const [RESERVA_CONSULTA_PRECO, set_RESERVA_CONSULTA_PRECO] = useState("");
   const [PRECO_CONSULTA_PRECO, set_PRECO_CONSULTA_PRECO] = useState("");
   const [COPIAS_CONSULTA_PRECO, set_COPIAS_CONSULTA_PRECO] = useState("");
+  const [ValueStatus, setValueStatus] = useState('ATIVO');
+  const [valueTipo, setValueTipo] = useState('');
   // Solicitar Cotacao
   const [QUANTIDADE_SOLICITAR_COTACAO, set_QUANTIDADE_SOLICITAR_COTACAO] = useState("");
   // Recarregar
   const [display, setDISPLAY] = useState(false)
 
+  const [hasPermission, setHasPermission] = useState(null);
+  const [scanned, setScanned] = useState(false);
+
 //*****************************************************************************************************************************************************************************************\\
-
-
 //*****************************************************************************************************************************************************************************************\\
 
   const contextValue = {
+    hasPermission, setHasPermission,
+    scanned, setScanned,
     stateA, setStateA,
     stateB, setStateB,
     ////VARIAVEIS TELA LOGIN
@@ -58,6 +73,8 @@ function Provider({ children }) {
     UNIDADE_INVENTARIO, setUNIDADE_INVENTARIO,
     ESTADO_ATUAL_INVENTARIO, setESTADO_ATUAL_INVENTARIO,
     ESTADO_APURADO_INVENTARIO, setESTADO_APURADO_INVENTARIO,
+    ValueStatus, setValueStatus,
+    valueTipo, setValueTipo,
     // VARIAVEIS TELA CONSULTA PRECO
     SECAO_CONSULTA_PRECO, set_SECAO_CONSULTA_PRECO,
     GRUPO_CONSULTA_PRECO, set_GRUPO_CONSULTA_PRECO,

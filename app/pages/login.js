@@ -18,6 +18,7 @@ import {useNavigation} from '@react-navigation/native';
 import Reload from '../components/reload'
 
 function Login() {
+
   const navigate = useNavigation()
   const {
     CODIGO_VENDEDOR, CAPTURA_CODIGO_VENDEDOR,
@@ -27,11 +28,37 @@ function Login() {
     display, setDISPLAY
   } = useContext(AppContext);
 
-  //Função para login Aplicação - Bruno Faria.
+  useEffect(() => {
+    
+    return () => {
+      console.log('------------------ ');
+      console.log('login - Linha 35: ' + JSON.stringify(`Codigo Vendedor: ${CODIGO_VENDEDOR}`));
+      console.log('login - Linha 36: ' + JSON.stringify(`Senha Vendedor: ${SENHA_VENDEDOR}`));
+      console.log('login - Linha 37: ' + JSON.stringify(`servidor: http://${SERVIDOR}:${PORTA}/coletor`));
+      console.log('------------------ ');
+    };
+  }, [CODIGO_VENDEDOR, SENHA_VENDEDOR, SERVIDOR, PORTA  ]);
+
+//***********************************************************************************//
+//***********************************************************************************//
+//=================> Função para LOGAR USUARIO - Bruno Faria <=====================//
+//***********************************************************************************//
   const conectApi = async () => {
+//***********************************************************************************//
+// Função [ navigate.reset() ] implementada no inicio da função pois o contextoAPI so altera o valor
+// do estado global na renderização da tela, então na chamada da função ele renderiza 
+// novamente a tela para atualizar os estados globais para usar as informações atribuidas
+// aos campos.
+//***********************************************************************************//
+    navigate.reset({
+      index: 0,
+      routes: [{ name: 'HOME' }],
+    });
+//------------------------------------------------------------------------------------\\
     setDISPLAY(true);
     const montaUrl = `http://${SERVIDOR}:${PORTA}/coletor`
     try {
+      //============* Validação de informações de HOST e codigo do produto! *============//
       if(SERVIDOR === '' | PORTA === '') {
         setDISPLAY(false);
         Alert.alert('Inclua informações do Servidor!')
@@ -50,6 +77,15 @@ function Login() {
         },
         );
         const json = await response.json();
+//====================================================================================//
+//======================* Verificação de URL e json Enviado! *==========================//
+        console.log('COD COMP - Linha 59: ' + JSON.stringify(`Login ${CODIGO_VENDEDOR.toUpperCase()}`));
+        console.log('COD COMP - Linha 60: ' + JSON.stringify(`Login ${SENHA_VENDEDOR}`));
+        console.log('COD COMP - Linha 61: ' + JSON.stringify(`Login ${montaUrl}`));
+        console.log('COD COMP - Linha 62: ' + JSON.stringify(`Login ${JSON.stringify(json)}`));
+//====================================================================================//
+//========================* Tratamento de retornos da API! *============================//
+
         if(JSON.stringify(json.retorno) === '"autenticado"') {
           setDISPLAY(false);
           navigate.navigate('MENU')
@@ -63,21 +99,16 @@ function Login() {
           setDISPLAY(false);
           Alert.alert('Preencha as informações de Login!')
         } 
-        else if(JSON.stringify(json).includes("failed")) {
-          setDISPLAY(false);
-          Alert.alert('Conexao com HOST falhou!')
-        }
       }
     } catch (error) {
       setDISPLAY(false);
-      Alert.alert('Conexao com HOST falhou!')
-    /* console.log(error); */
+      Alert.alert('Conexão com HOST falhou!')
    }
   }
 
-/*   useEffect(() => {
-    navigate.navigate('HOME')
-  }); */
+//***********************************************************************************//
+//***********************************************************************************//
+
 
   return(
     <>

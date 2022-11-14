@@ -22,7 +22,7 @@ const ConectModal = () => {
       </View>
       {/* Corpo da aplicacao */}
       <View style={styles.centeredView}>
-        <Text style={styles.titleUser}>Bem vindo {CODIGO_VENDEDOR}!</Text>
+        <Text style={styles.titleUser}>Bem vindo {CODIGO_VENDEDOR.toUpperCase()}!</Text>
         <View>
           <CardMenu/>
         </View>

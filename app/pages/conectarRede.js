@@ -34,11 +34,19 @@ const ConectModal = () => {
               placeholder="PORTA"
               placeholderTextColor ="#FFFFFF"
               keyboardType="numeric"
+              maxLength={4}
             />
           </View>
             <Pressable
               style={[styles.button]}
-              onPress={() => navigate.navigate('HOME')
+              onPress={() => {
+                CAPTURA_SERVIDOR(SERVIDOR)
+                CAPTURA_PORTA(PORTA)
+                navigate.reset({
+                  index: 0,
+                  routes: [{ name: 'HOME' }],
+                })
+              }
               }
             >
               <Text style={styles.textStyle}>SALVAR</Text>
@@ -47,7 +55,8 @@ const ConectModal = () => {
       </View>
         <View style={styles.footerLogin}>
         <Pressable
-              onPress={() => navigate.navigate('HOME')
+              onPress={() =>
+                navigate.navigate('HOME')
               }
             >
               <Text style={styles.textStyle}>Voltar</Text>

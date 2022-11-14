@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import AppContext from '../context/AppContext';
 import { StyleSheet,
   Text, 
@@ -6,54 +6,102 @@ import { StyleSheet,
   View,
   TextInput,
   Alert,
-  Image
 } from "react-native";
 import {useNavigation} from '@react-navigation/native';
 import CardComp from "../components/codComp";
 import BtnSalvar from "../components/btnSalvar";
+import Reload from '../components/reload';
+import { Picker } from "@react-native-picker/picker";
 
 const Inventario = () => {
   const navigate = useNavigation()
   const {
+    CODIGO_VENDEDOR, setCOD_INVENTARIO,
+    SENHA_VENDEDOR,
+    COD_INVENTARIO,
+    PORTA, 
+    SERVIDOR,
     DESCRICAO_INVENTARIO, setDESCRICAO_INVENTARIO,
     LOCALIZACAO_INVENTARIO, setLOCALIZACAO_INVENTARIO,
     STATUS_INVENTARIO, setSTATUS_INVENTARIO,
     TIPO_INVENTARIO, setTIPO_INVENTARIO,
     UNIDADE_INVENTARIO, setUNIDADE_INVENTARIO,
-    ESTADO_ATUAL_INVENTARIO, setSTADO_ATUAL_INVENTARIO,
-    ESTADO_APURADO_INVENTARIO, setESTADO_APURADO_INVENTARIO
+    ESTADO_ATUAL_INVENTARIO, setESTADO_ATUAL_INVENTARIO,
+    ESTADO_APURADO_INVENTARIO, setESTADO_APURADO_INVENTARIO,
+    display, setDISPLAY,
+    ValueStatus, setValueStatus,
+    valueTipo, setValueTipo,
+    limpaProduto
   } = useContext(AppContext);
+
+  const [itemsTipo] = useState(TIPO_INVENTARIO);
+  const [itemsStatus] = useState(STATUS_INVENTARIO);
 
   const dataInput = [
     {
       nome: "Descrição: ",
-      function: () => setDESCRICAO_INVENTARIO
+      function: setDESCRICAO_INVENTARIO,
+      tipo: "input",
+      value: DESCRICAO_INVENTARIO
     },
     {
       nome: "Localização: ",
-      function: () => setLOCALIZACAO_INVENTARIO
+      function: () => setLOCALIZACAO_INVENTARIO,
+      tipo: "input",
+      value: LOCALIZACAO_INVENTARIO
     },
     {
       nome: "Status: ",
-      function: () => setSTATUS_INVENTARIO
+      function: () => setSTATUS_INVENTARIO,
+      tipo: "dropdown",
+      items: STATUS_INVENTARIO,
+      value: ValueStatus,
+      setValue: setValueStatus,
     },
     {
       nome: "Tipo: ",
-      function: () => setTIPO_INVENTARIO
+      function: () => setTIPO_INVENTARIO,
+      tipo: "dropdown",
+      items: itemsTipo,
+      value: valueTipo,
+      setValue: setValueTipo,
+      value: TIPO_INVENTARIO,
     },
     {
       nome: "Unidade: ",
-      function: () => setUNIDADE_INVENTARIO
+      function: () => setUNIDADE_INVENTARIO,
+      tipo: "input",
+      value: UNIDADE_INVENTARIO
     },
     {
       nome: "Est. Atual: ",
-      function: () => setSTADO_ATUAL_INVENTARIO
+      function: () => setESTADO_ATUAL_INVENTARIO,
+      tipo: "input",
+      value: ESTADO_ATUAL_INVENTARIO
     },
     {
       nome: "Est. Apurado: ",
-      function: () => setESTADO_APURADO_INVENTARIO
+      function: () => setESTADO_APURADO_INVENTARIO,
+      tipo: "input",
+      value: ESTADO_APURADO_INVENTARIO
     }
   ];
+
+//***********************************************************************************//
+//===========> Função para LIMPAR INFORMAÇÔES produto - Bruno Faria <==============//
+// Reseta todo estado global para o valor inicial e renderiza a tela novamente
+// para exibir o valor inicial dos estados!
+//***********************************************************************************//
+const limpaVolta = () => {
+  setCOD_INVENTARIO('');
+  setDESCRICAO_INVENTARIO('');
+  setLOCALIZACAO_INVENTARIO('');
+  setValueStatus('ATIVO')
+  setUNIDADE_INVENTARIO('');
+  setESTADO_ATUAL_INVENTARIO('');
+  setESTADO_APURADO_INVENTARIO('');
+  navigate.navigate("MENU")
+}
 
   return (
     // container global
@@ -68,25 +116,58 @@ const Inventario = () => {
       <View style={styles.centeredView}>
         <CardComp/>
         { dataInput.map((e) => {
+          if(e.tipo === 'input') {
             return(
               <View style={ styles.inputContainer} key={e.nome}>
                 <Text style={styles.titleInput}>{e.nome}</Text>
                 <TextInput
                   style={styles.input}
                   onChangeText={e.function}
+                  value={e.value}
                   placeholderTextColor ="#FFFFFF"
                   keyboardType="text"
                 />
               </View>
             )
+          } else {
+            return(
+              <View style={ styles.inputContainer} key={e.nome} >
+                <View>
+                  <Text style={styles.titleInput}>{e.nome}</Text>
+                </View>
+                <View style={styles.input}>
+                  <Picker
+                    width={'100%'}
+                    selectedValue={e.value}
+                    onValueChange={(value) => {
+                      setValueStatus(value)
+                    }
+                    }>
+                      {
+                        e.items.map((item) => {
+                          return(
+                            <Picker.Item
+                              style={{color: "black", background: "none"}}
+                              key={item.label} 
+                              label={item.label} 
+                              value={item.value} 
+                            /> 
+                          )
+                        })
+                      }
+                  </Picker>
+                </View>
+              </View>
+            )
+          }
           })
         }
       </View>
+      {display ? <Reload/> : null}
       {/* Rodape */}
       <View style={styles.footerLogin}>
       <Pressable
-            onPress={() => navigate.navigate('MENU')
-            }
+            onPress={ limpaVolta }
           >
             <Text style={styles.textStyle}>Voltar</Text>
       </Pressable>
@@ -134,7 +215,8 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     padding: 5,
     marginTop: 3,
-    borderBottomColor: "#02225B"
+    borderBottomColor: "#02225B",
+    /* zIndex: 9 */
   },
   titleInput: {
     fontSize: 20,
@@ -161,6 +243,7 @@ const styles = StyleSheet.create({
     textAlign: "center"
   },
   input: {
+    justifyContent: "center",
     height: 35,
     width: "55%",
     borderWidth: 1,
@@ -168,7 +251,7 @@ const styles = StyleSheet.create({
     padding: 5,
     marginLeft: 5,
     color: "#000",
-    fontSize: 20,
+    fontSize: 15,
     backgroundColor: "#FFF",
   },
   footerLogin: {
