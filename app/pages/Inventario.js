@@ -5,7 +5,6 @@ import { StyleSheet,
   Pressable, 
   View,
   TextInput,
-  Alert,
 } from "react-native";
 import {useNavigation} from '@react-navigation/native';
 import CardComp from "../components/codComp";
@@ -16,11 +15,8 @@ import { Picker } from "@react-native-picker/picker";
 const Inventario = () => {
   const navigate = useNavigation()
   const {
-    CODIGO_VENDEDOR, setCOD_INVENTARIO,
-    SENHA_VENDEDOR,
-    COD_INVENTARIO,
-    PORTA, 
-    SERVIDOR,
+    display,
+    setCOD_INVENTARIO,
     DESCRICAO_INVENTARIO, setDESCRICAO_INVENTARIO,
     LOCALIZACAO_INVENTARIO, setLOCALIZACAO_INVENTARIO,
     STATUS_INVENTARIO, setSTATUS_INVENTARIO,
@@ -28,10 +24,8 @@ const Inventario = () => {
     UNIDADE_INVENTARIO, setUNIDADE_INVENTARIO,
     ESTADO_ATUAL_INVENTARIO, setESTADO_ATUAL_INVENTARIO,
     ESTADO_APURADO_INVENTARIO, setESTADO_APURADO_INVENTARIO,
-    display, setDISPLAY,
     ValueStatus, setValueStatus,
     valueTipo, setValueTipo,
-    limpaProduto
   } = useContext(AppContext);
 
   const [itemsTipo] = useState(TIPO_INVENTARIO);
@@ -46,13 +40,13 @@ const Inventario = () => {
     },
     {
       nome: "Localização: ",
-      function: () => setLOCALIZACAO_INVENTARIO,
+      function: setLOCALIZACAO_INVENTARIO,
       tipo: "input",
       value: LOCALIZACAO_INVENTARIO
     },
     {
       nome: "Status: ",
-      function: () => setSTATUS_INVENTARIO,
+      function: setSTATUS_INVENTARIO,
       tipo: "dropdown",
       items: STATUS_INVENTARIO,
       value: ValueStatus,
@@ -60,7 +54,7 @@ const Inventario = () => {
     },
     {
       nome: "Tipo: ",
-      function: () => setTIPO_INVENTARIO,
+      function: setTIPO_INVENTARIO,
       tipo: "dropdown",
       items: itemsTipo,
       value: valueTipo,
@@ -69,24 +63,25 @@ const Inventario = () => {
     },
     {
       nome: "Unidade: ",
-      function: () => setUNIDADE_INVENTARIO,
+      function: setUNIDADE_INVENTARIO,
       tipo: "input",
       value: UNIDADE_INVENTARIO
     },
     {
       nome: "Est. Atual: ",
-      function: () => setESTADO_ATUAL_INVENTARIO,
+      function: setESTADO_ATUAL_INVENTARIO,
       tipo: "input",
       value: ESTADO_ATUAL_INVENTARIO
     },
     {
       nome: "Est. Apurado: ",
-      function: () => setESTADO_APURADO_INVENTARIO,
+      function: setESTADO_APURADO_INVENTARIO,
       tipo: "input",
       value: ESTADO_APURADO_INVENTARIO
     }
   ];
 
+//***********************************************************************************//
 //***********************************************************************************//
 //===========> Função para LIMPAR INFORMAÇÔES produto - Bruno Faria <==============//
 // Reseta todo estado global para o valor inicial e renderiza a tela novamente

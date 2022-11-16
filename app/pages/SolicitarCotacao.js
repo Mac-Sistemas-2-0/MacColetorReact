@@ -4,39 +4,66 @@ import { StyleSheet,
   Pressable, 
   View,
   TextInput,
-  Alert,
-  Image
 } from "react-native";
 import AppContext from '../context/AppContext';
 import {useNavigation} from '@react-navigation/native';
 import CardComp from "../components/codComp";
 import BtnGeraCod from "../components/btnGeraCod";
 import BtnCadastrar from "../components/btnCadastrar";
+import Reload from '../components/reload';
 
 const Cotacao = () => {
   const navigate = useNavigation()
   const {
+    display,
+    setCOD_INVENTARIO,
     DESCRICAO_INVENTARIO, setDESCRICAO_INVENTARIO,
     ESTADO_ATUAL_INVENTARIO, setESTADO_ATUAL_INVENTARIO,
-    QUANTIDADE_SOLICITAR_COTACAO, set_QUANTIDADE_SOLICITAR_COTACAO,
+    ESTADO_APURADO_INVENTARIO, setESTADO_APURADO_INVENTARIO,
   } = useContext(AppContext);
 
   const dataInput = [
     {
       nome: "Descrição: ",
-      function: () => setDESCRICAO_INVENTARIO
+      tipo: "input",
+      function: setDESCRICAO_INVENTARIO,
+      value: DESCRICAO_INVENTARIO,
     },
     {
       nome: "Est. Atual: ",
-      function: () => setESTADO_ATUAL_INVENTARIO
+      tipo: "input",
+      function: setESTADO_ATUAL_INVENTARIO,
+      value: ESTADO_ATUAL_INVENTARIO,
+      teclado: "numeric"
     },
 
     {
       nome: "Quantidade: ",
-      function: () => set_QUANTIDADE_SOLICITAR_COTACAO
+      tipo: "input",
+      function: setESTADO_APURADO_INVENTARIO,
+      value: ESTADO_APURADO_INVENTARIO,
+      teclado: "numeric"
     },
   ];
 
+//***********************************************************************************//
+//***********************************************************************************//
+//===========> Função para LIMPAR INFORMAÇÔES - Bruno Faria <==============//
+// Reseta todo estado global para o valor inicial e renderiza a tela novamente
+// para exibir o valor inicial dos estados!
+//***********************************************************************************//
+  const limpaVolta = () => {
+    console.log('___________________________________________________________________');
+    console.log('<============> Função limpaProduto - Página codComp <=============>');
+    setCOD_INVENTARIO('');
+    setDESCRICAO_INVENTARIO('');
+    setESTADO_ATUAL_INVENTARIO('');
+    setESTADO_APURADO_INVENTARIO('');
+    navigate.navigate("MENU");
+    console.log( 'Linha: 63 | Estados vazios');
+    console.log('___________________________________________________________________');
+  };
+//***********************************************************************************//
   return (
     // container global
     <View style={styles.tela} >
@@ -56,19 +83,20 @@ const Cotacao = () => {
                 <TextInput
                   style={styles.input}
                   onChangeText={e.function}
+                  value={e.value}
                   placeholderTextColor ="#FFFFFF"
-                  keyboardType="text"
+                  keyboardType={e.teclado}
                 />
               </View>
             )
           })
         }
       </View>
+      {display ? <Reload/> : null}
       {/* Rodape */}
       <View style={styles.footerLogin}>
       <Pressable
-            onPress={() => navigate.navigate('MENU')
-            }
+            onPress={ limpaVolta }
           >
             <Text style={styles.textStyle}>Voltar</Text>
       </Pressable>

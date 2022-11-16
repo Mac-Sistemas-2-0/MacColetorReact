@@ -7,33 +7,46 @@ import {useNavigation} from '@react-navigation/native';
 
 const CardMenu = () => {
   const navigate = useNavigation()
+  const {
+    setPaginacao,
+    PORTA, CAPTURA_PORTA,
+    SERVIDOR, CAPTURA_SERVIDOR
+  } = useContext(AppContext);
 
   const menu = [
     {
       nome: "Inventário",
       icon: require('../assets/images/iconList.png'),
-      nav: () => navigate.navigate('INVENTARIO')
+      nav: () => {
+        setPaginacao('INVENTARIO')
+        navigate.navigate('INVENTARIO')
+      }
     },
     {
       nome: "Imp.Etiqueta",
       icon: require('../assets/images/iconImpress.png'),
-      nav: () => navigate.navigate('IMPETIQUETA')
+      nav: () => {
+        setPaginacao('IMPETIQUETA')
+        navigate.navigate('IMPETIQUETA')
+      }
     },
     {
       nome: "Consulta Preço",
       icon: require('../assets/images/iconPreco.png'),
-      nav: () => navigate.navigate('CONSULTAPRECO')
+      nav: () => {
+        setPaginacao('CONSULTAPRECO')
+        navigate.navigate('CONSULTAPRECO')
+      }
     },
     {
       nome: "Cotação",
       icon: require('../assets/images/iconGrafico.png'),
-      nav: () => navigate.navigate('SOLICITARCOTACAO')
+      nav: () => {
+        setPaginacao('SOLICITARCOTACAO')
+        navigate.navigate('SOLICITARCOTACAO')
+      }
     }
   ]
-  const {
-    PORTA, CAPTURA_PORTA,
-    SERVIDOR, CAPTURA_SERVIDOR
-  } = useContext(AppContext);
   return (
     // container global
     <View>

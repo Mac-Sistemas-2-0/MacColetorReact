@@ -6,9 +6,7 @@ import {
   StyleSheet,
   SafeAreaView,
   TextInput,
-  Button,
   Alert,
-  Modal,
   Pressable,
   TouchableOpacity
 } from 'react-native';
@@ -21,10 +19,10 @@ function Login() {
 
   const navigate = useNavigation()
   const {
-    CODIGO_VENDEDOR, CAPTURA_CODIGO_VENDEDOR,
-    SENHA_VENDEDOR, CAPTURA_SENHA_VENDEDOR,
     PORTA, 
     SERVIDOR,
+    CODIGO_VENDEDOR, CAPTURA_CODIGO_VENDEDOR,
+    SENHA_VENDEDOR, CAPTURA_SENHA_VENDEDOR,
     display, setDISPLAY
   } = useContext(AppContext);
 
@@ -101,6 +99,7 @@ function Login() {
         } 
       }
     } catch (error) {
+      console.log(error)
       setDISPLAY(false);
       Alert.alert('Conexão com HOST falhou!')
    }
@@ -140,7 +139,7 @@ function Login() {
             </View>
             <Pressable
               style={[styles.button]}
-              onPress={() => conectApi()}
+              onPress={ conectApi }
             >
               <Text style={styles.textStyle}>LOGIN</Text>
             </Pressable>

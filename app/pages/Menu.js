@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Alert, Modal, StyleSheet, Text, Pressable, View, TextInput } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import AppContext from '../context/AppContext';
 import BtnFechaApp from '../components/btnFechaApp';
 import {useNavigation} from '@react-navigation/native';

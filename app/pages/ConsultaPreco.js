@@ -5,10 +5,9 @@ import { StyleSheet,
   Pressable, 
   View,
   TextInput,
-  Alert,
-  Image
 } from "react-native";
 import {useNavigation} from '@react-navigation/native';
+import Reload from '../components/reload';
 
 import CardComp from "../components/codComp";
 
@@ -16,6 +15,7 @@ const ConsultaPreco = () => {
   const navigate = useNavigation()
 
   const {
+    setCOD_INVENTARIO,
     DESCRICAO_INVENTARIO, setDESCRICAO_INVENTARIO,
     LOCALIZACAO_INVENTARIO, setLOCALIZACAO_INVENTARIO,
     SECAO_CONSULTA_PRECO, set_SECAO_CONSULTA_PRECO,
@@ -24,47 +24,91 @@ const ConsultaPreco = () => {
     ESTADO_ATUAL_INVENTARIO, setESTADO_ATUAL_INVENTARIO,
     RESERVA_CONSULTA_PRECO, set_RESERVA_CONSULTA_PRECO,
     PRECO_CONSULTA_PRECO, set_PRECO_CONSULTA_PRECO,
-    COPIAS_CONSULTA_PRECO, set_COPIAS_CONSULTA_PRECO
+    COPIAS_CONSULTA_PRECO, set_COPIAS_CONSULTA_PRECO,
+    display,
   } = useContext(AppContext);
 
   const dataInput = [
     {
       nome: "Descrição: ",
-      function: () => setDESCRICAO_INVENTARIO
+      function: setDESCRICAO_INVENTARIO,
+      tipo: "input",
+      value: DESCRICAO_INVENTARIO
     },
     {
       nome: "Localização: ",
-      function: () => setLOCALIZACAO_INVENTARIO
+      function: setLOCALIZACAO_INVENTARIO,
+      tipo: "input",
+      value: LOCALIZACAO_INVENTARIO
     },
     {
       nome: "Seção: ",
-      function: () => set_SECAO_CONSULTA_PRECO
+      function: set_SECAO_CONSULTA_PRECO,
+      tipo: "input",
+      value: SECAO_CONSULTA_PRECO
     },
     {
       nome: "Grupo: ",
-      function: () => set_GRUPO_CONSULTA_PRECO
+      function: set_GRUPO_CONSULTA_PRECO,
+      tipo: "input",
+      value: GRUPO_CONSULTA_PRECO
     },
     {
       nome: "Est. Atual: ",
-      function: () => setESTADO_ATUAL_INVENTARIO
+      function: setESTADO_ATUAL_INVENTARIO,
+      tipo: "input",
+      value: ESTADO_ATUAL_INVENTARIO
     },
     {
       nome: "Reserva: ",
-      function: () => set_RESERVA_CONSULTA_PRECO
+      function: set_RESERVA_CONSULTA_PRECO,
+      tipo: "input",
+      value: RESERVA_CONSULTA_PRECO
     },
     {
-    nome: "Unidade: ",
-    function: () => setUNIDADE_INVENTARIO
+      nome: "Unidade: ",
+      function: setUNIDADE_INVENTARIO,
+      tipo: "input",
+      value: UNIDADE_INVENTARIO
     },
     {
       nome: "Preço: ",
-      function: () => set_PRECO_CONSULTA_PRECO
+      function: set_PRECO_CONSULTA_PRECO,
+      tipo: "input",
+      value: PRECO_CONSULTA_PRECO
     },
     {
       nome: "Qtde. Cópias: ",
-      function: () => set_COPIAS_CONSULTA_PRECO
+      function: set_COPIAS_CONSULTA_PRECO,
+      tipo: "input",
+      value: COPIAS_CONSULTA_PRECO
     },
   ];
+
+//***********************************************************************************//
+//***********************************************************************************//
+//===========> Função para LIMPAR INFORMAÇÔES - Bruno Faria <==============//
+// Reseta todo estado global para o valor inicial e renderiza a tela novamente
+// para exibir o valor inicial dos estados!
+//***********************************************************************************//
+  const limpaVolta = () => {
+    console.log('___________________________________________________________________');
+    console.log('<============> Função limpaProduto - Página codComp <=============>');
+    setCOD_INVENTARIO('');
+    setDESCRICAO_INVENTARIO('');
+    setLOCALIZACAO_INVENTARIO('');
+    set_SECAO_CONSULTA_PRECO('');
+    set_GRUPO_CONSULTA_PRECO('');
+    setESTADO_ATUAL_INVENTARIO('');
+    set_RESERVA_CONSULTA_PRECO('');
+    setUNIDADE_INVENTARIO('');
+    set_PRECO_CONSULTA_PRECO('');
+    set_COPIAS_CONSULTA_PRECO('');
+    navigate.navigate("MENU");
+    console.log( 'Linha: 110 | Estados vazios');
+    console.log('___________________________________________________________________');
+  };
+//***********************************************************************************//
 
   return (
     // container global
@@ -85,6 +129,7 @@ const ConsultaPreco = () => {
                 <TextInput
                   style={styles.input}
                   onChangeText={e.function}
+                  value={e.value}
                   placeholderTextColor ="#FFFFFF"
                   keyboardType="text"
                 />
@@ -96,12 +141,12 @@ const ConsultaPreco = () => {
       {/* Rodape */}
       <View style={styles.footerLogin}>
       <Pressable
-            onPress={() => navigate.navigate('MENU')
-            }
+            onPress={ limpaVolta }
           >
             <Text style={styles.textStyle}>Voltar</Text>
       </Pressable>
       </View>
+      {display ? <Reload/> : null}
     </View>
   );
 };

@@ -1,11 +1,9 @@
 import React, { useContext } from "react";
 import { StyleSheet,
-  Text, 
-  Pressable, 
+  Text,
+  Pressable,
   View,
   TextInput,
-  Alert,
-  Image
 } from "react-native";
 import AppContext from '../context/AppContext';
 import {useNavigation} from '@react-navigation/native';
@@ -15,16 +13,41 @@ import CardComp from "../components/codComp";
 const ImpEtiqueta = () => {
   const navigate = useNavigation()
   const {
-    COPIAS_CONSULTA_PRECO, set_COPIAS_CONSULTA_PRECO
+    COPIAS_CONSULTA_PRECO, set_COPIAS_CONSULTA_PRECO,
+    DESCRICAO_INVENTARIO, setDESCRICAO_INVENTARIO
   } = useContext(AppContext);
 
   const dataInput = [
     {
+      nome: "Descrição: ",
+      function: setDESCRICAO_INVENTARIO,
+      tipo: "input",
+      value: DESCRICAO_INVENTARIO
+    },
+    {
       nome: "Qtde. Cópias: ",
-      function: () => set_COPIAS_CONSULTA_PRECO
+      function: set_COPIAS_CONSULTA_PRECO,
+      value: COPIAS_CONSULTA_PRECO
     },
   ];
 
+//***********************************************************************************//
+//***********************************************************************************//
+//===========> Função para LIMPAR INFORMAÇÔES - Bruno Faria <==============//
+// Reseta todo estado global para o valor inicial e renderiza a tela novamente
+// para exibir o valor inicial dos estados!
+//***********************************************************************************//
+  const limpaVolta = () => {
+    console.log('___________________________________________________________________');
+    console.log('<============> Função limpaProduto - Página codComp <=============>');
+    setCOD_INVENTARIO('');
+    setDESCRICAO_INVENTARIO('');
+    set_COPIAS_CONSULTA_PRECO('');
+    navigate.navigate("MENU");
+    console.log( 'Linha: 49 | Estados vazios');
+    console.log('___________________________________________________________________');
+  };
+//***********************************************************************************//
 
   return (
     // container global
@@ -45,8 +68,9 @@ const ImpEtiqueta = () => {
                 <TextInput
                   style={styles.input}
                   onChangeText={e.function}
+                  value={e.value}
                   placeholderTextColor ="#FFFFFF"
-                  keyboardType="text"
+                  keyboardType="numeric"
                 />
               </View>
             )
@@ -56,8 +80,7 @@ const ImpEtiqueta = () => {
       {/* Rodape */}
       <View style={styles.footerLogin}>
       <Pressable
-            onPress={() => navigate.navigate('MENU')
-            }
+            onPress={ limpaVolta }
           >
             <Text style={styles.textStyle}>Voltar</Text>
       </Pressable>

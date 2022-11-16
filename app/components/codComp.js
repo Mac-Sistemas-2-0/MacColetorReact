@@ -1,4 +1,4 @@
-import React, {useContext} from "react";
+import React, { useContext } from "react";
 import {
   TextInput,
   Text,
@@ -6,30 +6,16 @@ import {
   Image,
   Pressable,
   StyleSheet,
-  Alert
+  Alert, TouchableOpacity
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import AppContext from '../context/AppContext';
+import Apap from './qr'
 
-import BarcodeZxingScan from "react-native-barcode-zxing-scan";
+//import BarcodeZxingScan from "react-native-barcode-zxing-scan";
 
 function cardComp() {
   const navigate = useNavigation()
-
-  const barcodeScanned = (data) => {
-    console.log('oi');
-    COD_INVENTARIO(data)
-    console.log("Barcode ", data);
-    navigate.reset({
-      index: 0,
-      routes: [{ name: 'INVENTARIO' }],
-    });
-  };
-
-  const handleClick = () => {
-    console.log('linha 29');
-    BarcodeZxingScan.showQrReader(barcodeScanned);
-  };
 
   const {
     COD_INVENTARIO, setCOD_INVENTARIO,
@@ -46,14 +32,21 @@ function cardComp() {
     ESTADO_APURADO_INVENTARIO, setESTADO_APURADO_INVENTARIO,
     display, setDISPLAY,
     ValueStatus, setValueStatus,
-    activ, setActive
+    SECAO_CONSULTA_PRECO, set_SECAO_CONSULTA_PRECO,
+    GRUPO_CONSULTA_PRECO, set_GRUPO_CONSULTA_PRECO,
+    RESERVA_CONSULTA_PRECO, set_RESERVA_CONSULTA_PRECO,
+    PRECO_CONSULTA_PRECO, set_PRECO_CONSULTA_PRECO,
+    COPIAS_CONSULTA_PRECO, set_COPIAS_CONSULTA_PRECO,
+    paginacao, setPaginacao
   } = useContext(AppContext);
 
 //***********************************************************************************//
 //***********************************************************************************//
 //=================> Função para BUSCAR produto - Bruno Faria <=====================//
 //***********************************************************************************//
-  const bucaProduto = async () => {
+  const buscaProduto = async () => {
+    console.log('___________________________________________________________________');
+    console.log('<============> Função buscaProduto - Página codComp <=============>');
 //***********************************************************************************//
 // Função [ navigate.reset() ] implementada no inicio da função pois o contextoAPI so altera o valor
 // do estado global na renderização da tela, então na chamada da função ele renderiza 
@@ -62,8 +55,9 @@ function cardComp() {
 //***********************************************************************************//
     navigate.reset({
       index: 0,
-      routes: [{ name: 'INVENTARIO' }],
+      routes: [{ name: paginacao }],
     });
+    console.log('Linha: 60 | Paginação: '+ paginacao);
 //------------------------------------------------------------------------------------\\
     setDISPLAY(true);
     const montaUrl = `http://${SERVIDOR}:${PORTA}/coletor`;
@@ -95,9 +89,8 @@ function cardComp() {
         const json = await response.json();
 //====================================================================================//
 //======================* Verificação de URL e json Enviado! *==========================//
-        console.log('COD COMP - Linha 69: ' + JSON.stringify(json.retorno.status));
-        console.log('COD COMP - Linha 70: ' + JSON.stringify(montaUrl));
-        console.log('COD COMP - Linha 71: ' + JSON.stringify(json));
+        console.log('Linha: 92 | MontaUrl: ' + JSON.stringify(montaUrl));
+        console.log('Linha: 93 | Retorno da Api: ' + JSON.stringify(json));
 //====================================================================================//
 //========================* Tratamento de retornos da API! *============================//
         if(json.sucesso === "ok") {
@@ -138,45 +131,60 @@ function cardComp() {
               setUNIDADE_INVENTARIO(json.retorno.unidade);
               setESTADO_ATUAL_INVENTARIO(json.retorno.estoque);
               setESTADO_APURADO_INVENTARIO(json.retorno.estoque);
+              set_SECAO_CONSULTA_PRECO(json.retorno.secao);
+              set_GRUPO_CONSULTA_PRECO(json.retorno.grupo);
+              set_RESERVA_CONSULTA_PRECO(json.retorno.reserva);
+              set_PRECO_CONSULTA_PRECO(json.retorno.preco);
               setDISPLAY(false);
               navigate.reset({
                 index: 0,
-                routes: [{ name: 'INVENTARIO' }],
+                routes: [{ name: paginacao}],
               });
           }
         }
       }
-    } catch (error) {
+    } 
+    catch (error) {
       setDISPLAY(false);
       if(toString(error).includes('failed', -1)) {
         console.log(`Inventario erro: ${error}`);
           navigate.reset({
           index: 0,
-          routes: [{ name: 'INVENTARIO' }],
+          routes: [{ name: paginacao}],
         }); 
         Alert.alert('Conexão com HOST falhou!')
       }
-    }
+    };
+    console.log('___________________________________________________________________');
   };
 //***********************************************************************************//
-//***********************************************************************************//
 
+//***********************************************************************************//
 //***********************************************************************************//
 //===========> Função para LIMPAR INFORMAÇÔES produto - Bruno Faria <==============//
 // Reseta todo estado global para o valor inicial e renderiza a tela novamente
 // para exibir o valor inicial dos estados!
 //***********************************************************************************//
-const limpaProduto = () => {
-  setDISPLAY(true);
-  setCOD_INVENTARIO('');
-  setDESCRICAO_INVENTARIO('');
-  setLOCALIZACAO_INVENTARIO('');
-  setValueStatus('ATIVO')
-  setUNIDADE_INVENTARIO('');
-  setESTADO_ATUAL_INVENTARIO('');
-  setESTADO_APURADO_INVENTARIO('');
-  setDISPLAY(false);
-}
+  const limpaProduto = () => {
+    console.log('___________________________________________________________________');
+    console.log('<============> Função limpaProduto - Página codComp <=============>');
+    setDISPLAY(true);
+    setCOD_INVENTARIO('');
+    setDESCRICAO_INVENTARIO('');
+    setLOCALIZACAO_INVENTARIO('');
+    setValueStatus('ATIVO');
+    setTIPO_INVENTARIO('PARCIAL')
+    setUNIDADE_INVENTARIO('');
+    setESTADO_ATUAL_INVENTARIO('');
+    setESTADO_APURADO_INVENTARIO('');
+    set_SECAO_CONSULTA_PRECO('');
+    set_GRUPO_CONSULTA_PRECO('');
+    set_RESERVA_CONSULTA_PRECO('');
+    set_PRECO_CONSULTA_PRECO('');
+    set_COPIAS_CONSULTA_PRECO('');
+    console.log( 'Linha: 184 | Estados vazios');
+    console.log('___________________________________________________________________');
+  }
 //***********************************************************************************//
 //***********************************************************************************//
 
@@ -189,11 +197,11 @@ const limpaProduto = () => {
         onChangeText={setCOD_INVENTARIO}
         value={COD_INVENTARIO}
         placeholderTextColor ="#FFFFFF"
-        keyboardType="text"
+        keyboardType="numeric"
       />
       {/* <=======> Renderização do BTN camera <=======> */}
       <Pressable
-        onPress={() => handleClick() }
+       /*  onPress={() => openScanner} */
         >
         <Image
           style={styles.logoFooterBTN}
@@ -202,7 +210,7 @@ const limpaProduto = () => {
       </Pressable>
       {/* <=======> Renderização do BTN Pesquisar/Lupa <=======> */}
       <Pressable
-        onPress={ bucaProduto }
+        onPress={ buscaProduto }
         >
         <Image
           style={styles.logoFooterBTN}
@@ -218,6 +226,7 @@ const limpaProduto = () => {
           source={require('../assets/images/closeBlue.png')}
         />
       </Pressable>
+      {/* <Apap/> */}
     </View>
   )
 };

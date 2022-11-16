@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import AppContext from './AppContext';
 
 function Provider({ children }) {
+  const [paginacao, setPaginacao] = useState('');
   const [stateA, setStateA] = useState('oi');
   const [stateB, setStateB] = useState('initialStateB');
   //VARIAVEIS TELA LOGIN
@@ -11,12 +12,10 @@ function Provider({ children }) {
   // VARIAVEIS DE CONEXAO COM HOST
   const [PORTA, CAPTURA_PORTA] = useState(0);
   const [SERVIDOR, CAPTURA_SERVIDOR] = useState('');
-  //VARIAVEIS MENU
-  const [VENDEDOR, setVENDEDOR] = useState("Bruno");
   // VARIAIS TELA INVENTARIO
   const [COD_INVENTARIO, setCOD_INVENTARIO] = useState('');
-  const [DESCRICAO_INVENTARIO, setDESCRICAO_INVENTARIO] = useState("");
-  const [LOCALIZACAO_INVENTARIO, setLOCALIZACAO_INVENTARIO] = useState("");
+  const [DESCRICAO_INVENTARIO, setDESCRICAO_INVENTARIO] = useState('');
+  const [LOCALIZACAO_INVENTARIO, setLOCALIZACAO_INVENTARIO] = useState('');
   const [STATUS_INVENTARIO, setSTATUS_INVENTARIO] = useState(
     [
       {label: 'ATIVO', value: '1'},
@@ -29,19 +28,17 @@ function Provider({ children }) {
       {label: 'TOTAL', value: '2'}
     ]
   );
-  const [UNIDADE_INVENTARIO, setUNIDADE_INVENTARIO] = useState("");
-  const [ESTADO_ATUAL_INVENTARIO, setESTADO_ATUAL_INVENTARIO] = useState("");
-  const [ESTADO_APURADO_INVENTARIO, setESTADO_APURADO_INVENTARIO,] = useState("");
+  const [UNIDADE_INVENTARIO, setUNIDADE_INVENTARIO] = useState('');
+  const [ESTADO_ATUAL_INVENTARIO, setESTADO_ATUAL_INVENTARIO] = useState('');
+  const [ESTADO_APURADO_INVENTARIO, setESTADO_APURADO_INVENTARIO,] = useState('');
   //Consulta preco
-  const [SECAO_CONSULTA_PRECO, set_SECAO_CONSULTA_PRECO] = useState("");
-  const [GRUPO_CONSULTA_PRECO, set_GRUPO_CONSULTA_PRECO] = useState("");
-  const [RESERVA_CONSULTA_PRECO, set_RESERVA_CONSULTA_PRECO] = useState("");
-  const [PRECO_CONSULTA_PRECO, set_PRECO_CONSULTA_PRECO] = useState("");
-  const [COPIAS_CONSULTA_PRECO, set_COPIAS_CONSULTA_PRECO] = useState("");
+  const [SECAO_CONSULTA_PRECO, set_SECAO_CONSULTA_PRECO] = useState('');
+  const [GRUPO_CONSULTA_PRECO, set_GRUPO_CONSULTA_PRECO] = useState('');
+  const [RESERVA_CONSULTA_PRECO, set_RESERVA_CONSULTA_PRECO] = useState('');
+  const [PRECO_CONSULTA_PRECO, set_PRECO_CONSULTA_PRECO] = useState('');
+  const [COPIAS_CONSULTA_PRECO, set_COPIAS_CONSULTA_PRECO] = useState('');
   const [ValueStatus, setValueStatus] = useState('ATIVO');
   const [valueTipo, setValueTipo] = useState('');
-  // Solicitar Cotacao
-  const [QUANTIDADE_SOLICITAR_COTACAO, set_QUANTIDADE_SOLICITAR_COTACAO] = useState("");
   // Recarregar
   const [display, setDISPLAY] = useState(false)
 
@@ -49,6 +46,7 @@ function Provider({ children }) {
 //*****************************************************************************************************************************************************************************************\\
 
   const contextValue = {
+    paginacao, setPaginacao,
     stateA, setStateA,
     stateB, setStateB,
     ////VARIAVEIS TELA LOGIN
@@ -57,8 +55,6 @@ function Provider({ children }) {
     // VARIAVEIS DE CONEXAO COM HOST
     PORTA, CAPTURA_PORTA,
     SERVIDOR, CAPTURA_SERVIDOR,
-    //VARIAVEIS TELA MENU
-    VENDEDOR, setVENDEDOR,
     // VARIAVEIS TELA INVENTARIO
     COD_INVENTARIO, setCOD_INVENTARIO,
     DESCRICAO_INVENTARIO, setDESCRICAO_INVENTARIO,
@@ -76,8 +72,6 @@ function Provider({ children }) {
     RESERVA_CONSULTA_PRECO, set_RESERVA_CONSULTA_PRECO,
     PRECO_CONSULTA_PRECO, set_PRECO_CONSULTA_PRECO,
     COPIAS_CONSULTA_PRECO, set_COPIAS_CONSULTA_PRECO,
-    // VARIAVEIS TELA SOLICITAR COTACAO
-    QUANTIDADE_SOLICITAR_COTACAO, set_QUANTIDADE_SOLICITAR_COTACAO,
     display, setDISPLAY
   };
 
